@@ -1,5 +1,5 @@
 {% set name = "strsimpy" %}
-{% set version = "0.1.9" %}
+{% set version = "0.2.0" %}
 
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 23b4820fad5584ddf1b4701d2e9b82a06b5f4db009ee7f816fd5694901655259 
+  sha256: a02fd6eb36130311d4978ddbef0248be19a80a715c3100e6ce8d6faab24c8122
 
 build:
   number: 0
