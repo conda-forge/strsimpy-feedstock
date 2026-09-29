@@ -195,4 +195,5 @@ Feedstock Maintainers
 =====================
 
 * [@aschonfeld](https://github.com/aschonfeld/)
+* [@jsmolic](https://github.com/jsmolic/)
 
