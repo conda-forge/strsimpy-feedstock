@@ -1,15 +1,15 @@
 schema_version: 1
 
 context:
-  version: 0.2.1
+  version: "0.4.0"
 
 package:
   name: strsimpy
   version: ${{ version }}
 
 source:
-- url: https://files.pythonhosted.org/packages/source/s/strsimpy/strsimpy-${{ version }}.tar.gz
-  sha256: 0842eb57f7af86c882a59a1bc8721ec2580a267e563fd0503ced2972040372c9
+  - url: https://files.pythonhosted.org/packages/source/s/strsimpy/strsimpy-${{ version }}.tar.gz
+    sha256: e9fd6ded4a22ae40ed4be14e7053f0acbc328845fd315a6386cdec1db0b13027
 
 build:
   number: 0
