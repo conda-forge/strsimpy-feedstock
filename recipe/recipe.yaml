@@ -20,7 +20,7 @@ requirements:
   host:
     - pip
     - python ${{ python_min }}.*
-    - maturin
+    - maturin >=1.16,<2.0
   run:
     - python >=${{ python_min }}
 
