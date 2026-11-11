@@ -21,6 +21,7 @@ requirements:
     - pip
     - python ${{ python_min }}.*
     - maturin >=1.16,<2.0
+    - puccinialin
   run:
     - python >=${{ python_min }}
 
