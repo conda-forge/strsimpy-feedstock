@@ -13,6 +13,8 @@ source:
 
 build:
   number: 0
+  python:
+    version_independent: true
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
@@ -29,17 +31,21 @@ requirements:
         - cross-python_${{ target_platform }}
         - maturin
   host:
-    - python
+    - python ${{ python_min }}.*
+    - python-abi3
     - pip
     - maturin >=1,<2
   run:
-    - python
+    - python >=${{ python_min }}
 
 tests:
   - python:
       imports:
         - strsimpy
       pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
 
 about:
   license: MIT
