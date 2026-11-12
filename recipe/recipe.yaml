@@ -1,26 +1,40 @@
 schema_version: 1
 
 context:
-  version: "0.3.0"
+  version: "0.4.1"
 
 package:
   name: strsimpy
   version: ${{ version }}
 
 source:
-  - url: https://files.pythonhosted.org/packages/source/s/strsimpy/strsimpy-${{ version }}.tar.gz
-    sha256: ba1128dfaef6c85398576ad0f576b4eb2b78e9e707a713e228b32532aabc2c39
+  url: https://files.pythonhosted.org/packages/source/s/strsimpy/strsimpy-${{ version }}.tar.gz
+  sha256: f6a96d128ca10e1eb107b2506d128f5a4c42f087d97c7720aedd4c772262be12
 
 build:
   number: 0
-  noarch: python
-  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    version_independent: true
+  script:
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
 requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - ${{ compiler('rust') }}
+    - cargo-bundle-licenses
+    - if: build_platform != target_platform
+      then:
+        - python ${{ python_min }}.*
+        - cross-python_${{ target_platform }}
+        - maturin
   host:
-    - pip
     - python ${{ python_min }}.*
-    - setuptools
+    - python-abi3
+    - pip
+    - maturin >=1,<2
   run:
     - python >=${{ python_min }}
 
@@ -28,10 +42,18 @@ tests:
   - python:
       imports:
         - strsimpy
-      pip_check: false
+      pip_check: true
       python_version:
         - ${{ python_min }}.*
-        - '*'
+        - "*"
+  - requirements:
+      run:
+        - abi3audit
+        - python ${{ python_min }}.*
+    script:
+      - if: unix
+        then: abi3audit $SP_DIR/strsimpy/_strsimpy.abi3.so -s -v --assume-minimum-abi3 ${{ python_min }}
+        else: abi3audit %SP_DIR%/strsimpy/_strsimpy.pyd -s -v --assume-minimum-abi3 ${{ python_min }}
 
 about:
   license: MIT
